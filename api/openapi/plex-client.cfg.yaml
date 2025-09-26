@@ -1,0 +1,8 @@
+generate:
+  client: true
+  models: true
+output: plex.gen.go
+package: clients
+import-mapping: {}
+output-options:
+  skip-prune: true

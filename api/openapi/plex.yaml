@@ -1,0 +1,33 @@
+openapi: 3.0.3
+info:
+  title: Plex Media Server API (excerpt)
+  version: 1.0.0
+  description: |
+    Minimal subset of the Plex Media Server API used for bootstraping the project structure.
+servers:
+  - url: https://plex.tv
+paths:
+  /identity:
+    get:
+      operationId: getIdentity
+      summary: Retrieve Plex Media Server identity information.
+      responses:
+        '200':
+          description: The server identity document.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentityResponse'
+components:
+  schemas:
+    IdentityResponse:
+      type: object
+      properties:
+        machineIdentifier:
+          type: string
+        version:
+          type: string
+        friendlyName:
+          type: string
+      required:
+        - machineIdentifier

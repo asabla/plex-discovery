@@ -1,0 +1,36 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  cmd = "go build -o tmp/server ./cmd/server"
+  bin = "tmp/server"
+  full_bin = "tmp/server"
+  include_ext = ["go", "templ"]
+  exclude_dir = ["tmp", "web/node_modules", "web/dist"]
+  exclude_regex = ["_templ.go$"]
+
+[log]
+  time = true
+
+[color]
+  main = "cyan"
+  watcher = "yellow"
+  build = "green"
+  runner = "magenta"
+
+[watch]
+  include = ["."]
+  exclude = ["tmp", "web/node_modules", "web/dist"]
+  include_ext = ["go", "templ"]
+
+[runner]
+  pre_cmd = [
+    "mkdir -p tmp",
+    "[ -d web/node_modules ] || npm --prefix web install",
+    "npm --prefix web run dev -- --host 0.0.0.0 --port 5173 & echo $! > tmp/vite.pid"
+  ]
+  pre_delay = 100
+  cmd = "tmp/server"
+  clean_cmd = [
+    "if [ -f tmp/vite.pid ]; then kill $(cat tmp/vite.pid) 2>/dev/null || true; rm tmp/vite.pid; fi"
+  ]
