@@ -24,10 +24,3 @@ func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
 	return &Client{transport: c}, nil
 }
 
-func (c *Client) GetIdentity(ctx context.Context) (*clients.GetIdentityResponse, error) {
-	resp, err := c.transport.GetIdentityWithResponse(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
